@@ -1,10 +1,14 @@
 const express = require("express")
-//glue layer between graphql and express
-const expressGraphQL = require("express-graphql")
+const graphQLHttp = require("express-graphql")
+const {graphQLSchema} = require("./graphql/schema.js")
+const {graphQLResolver} = require("./graphql/resolver.js")
 const app = express()
 
-//any request that comes into our app, looking for the route, /GraphQL, we want the GraphQL library to handle it
-app.use('/graphql', expressGraphQL({
+console.log(graphQLSchema)
+console.log(graphQLResolver)
+app.use('/graphql', graphQLHttp({
+    schema : graphQLSchema,
+    rootValue : graphQLResolver,
     graphiql : true
 }))
 
